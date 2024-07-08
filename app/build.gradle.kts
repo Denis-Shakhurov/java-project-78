@@ -16,8 +16,4 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 tasks.jacocoTestReport { reports { xml.required.set(true) } }
