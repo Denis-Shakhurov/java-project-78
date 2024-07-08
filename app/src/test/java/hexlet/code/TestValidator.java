@@ -11,7 +11,7 @@ public class TestValidator {
 
     @Test
     public void testStringSchema() {
-        assertTrue(schema.required().isValid(""));
+        assertFalse(schema.required().isValid(""));
         assertTrue(schema.minLength(3).contains("ol").isValid("cool"));
         assertFalse(schema.minLength(3).minLength(10).minLength(12).isValid("Hexlet"));
     }
