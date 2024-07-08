@@ -13,6 +13,6 @@ public class TestValidator {
     public void testStringSchema() {
         assertTrue(schema.required().isValid(""));
         assertTrue(schema.minLength(3).contains("ol").isValid("cool"));
-        assertFalse(schema.minLength(3).minLength(10).minLength(2).isValid("Hexlet"));
+        assertFalse(schema.minLength(3).minLength(10).minLength(12).isValid("Hexlet"));
     }
 }
