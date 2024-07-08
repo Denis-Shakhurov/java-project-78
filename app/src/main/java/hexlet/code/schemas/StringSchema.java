@@ -11,7 +11,7 @@ public class StringSchema {
     }
 
     public StringSchema required() {
-        methods.put("required", "0");
+        methods.remove("required");
         methods.put("required", null);
         return this;
     }
@@ -34,7 +34,7 @@ public class StringSchema {
             String nameMethod = key;
             String value = methods.get(key);
             if (nameMethod.equals("required")) {
-                res += text == null || text == "" ? 2 : 1;
+                res += text == null || text == "" ? 1 : 2;
             } else if (nameMethod.equals("minLength")) {
                 res += text.length() >= Integer.valueOf(value) ? 2 : 1;
             } else if (nameMethod.equals("contains")) {
