@@ -21,4 +21,8 @@ jacoco {
     reportsDirectory = layout.buildDirectory.dir("customJacocoReportDir")
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 tasks.jacocoTestReport { reports { xml.required.set(true) } }
