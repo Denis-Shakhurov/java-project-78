@@ -41,7 +41,7 @@ public class StringSchema {
                 res += text.contains(value) ? 2 : 1;
             }
         }
-       reset();
+        reset();
         return res % 2 == 0;
     }
     private void reset() {
