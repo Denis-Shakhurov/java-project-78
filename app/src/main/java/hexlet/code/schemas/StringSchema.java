@@ -6,6 +6,10 @@ import java.util.Map;
 public class StringSchema {
     private Map<String, String> methods = new LinkedHashMap<>();
 
+    public Map<String, String> getMethods() {
+        return methods;
+    }
+
     public StringSchema required() {
         methods.put("required", "0");
         methods.put("required", null);
@@ -37,6 +41,12 @@ public class StringSchema {
                 res += text.contains(value) ? 2 : 1;
             }
         }
+       reset();
         return res % 2 == 0;
+    }
+    private void reset() {
+        methods.remove("required");
+        methods.remove("minLength");
+        methods.remove("contains");
     }
 }
