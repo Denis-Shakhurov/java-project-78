@@ -38,7 +38,7 @@ public class StringSchema extends BaseSchema<String> {
                 res += text.contains(value) ? 2 : 1;
             }
         }
-        reset(methods);
+        methods.remove("contains");
         return res % 2 == 0;
     }
 }
