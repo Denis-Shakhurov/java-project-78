@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class BaseSchema<T> {
 
-    protected boolean isValid(T value) {
+    public boolean isValid(T value) {
         return true;
     }
 
