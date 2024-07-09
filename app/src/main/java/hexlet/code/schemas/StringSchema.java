@@ -3,12 +3,8 @@ package hexlet.code.schemas;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class StringSchema {
+public class StringSchema extends BaseSchema<String > {
     private Map<String, String> methods = new LinkedHashMap<>();
-
-    public Map<String, String> getMethods() {
-        return methods;
-    }
 
     public StringSchema required() {
         methods.remove("required");
@@ -17,16 +13,17 @@ public class StringSchema {
     }
 
     public StringSchema minLength(int min) {
-        methods.put("minLength", "0");
+        methods.remove("minLength");
         methods.put("minLength", String.valueOf(min));
         return this;
     }
 
     public StringSchema contains(String str) {
-        methods.put("contains", "0");
+        methods.remove("contains");
         methods.put("contains", str);
         return this;
     }
+
     public boolean isValid(String text) {
         int res = 0;
         var keys = methods.keySet();
@@ -41,12 +38,7 @@ public class StringSchema {
                 res += text.contains(value) ? 2 : 1;
             }
         }
-        reset();
+        reset(methods);
         return res % 2 == 0;
-    }
-    private void reset() {
-        methods.remove("required");
-        methods.remove("minLength");
-        methods.remove("contains");
     }
 }
