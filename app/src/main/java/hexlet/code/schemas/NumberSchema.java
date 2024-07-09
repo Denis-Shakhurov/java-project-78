@@ -2,7 +2,6 @@ package hexlet.code.schemas;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 
 public class NumberSchema extends BaseSchema<Integer> {
     private Map<String, Integer> methods = new LinkedHashMap<>();
@@ -21,9 +20,9 @@ public class NumberSchema extends BaseSchema<Integer> {
         return this;
     }
 
-    public NumberSchema range(int start, int end) {
-        this.start = start;
-        this.end = end;
+    public NumberSchema range(int from, int before) {
+        this.start = from;
+        this.end = before;
         methods.remove("range");
         methods.put("range", 0);
         return this;
@@ -35,7 +34,6 @@ public class NumberSchema extends BaseSchema<Integer> {
         var keys = methods.keySet();
         for (var key : keys) {
             String nameMethod = key;
-            //Integer value = methods.get(key);
             if (nameMethod.equals("required")) {
                 res += number == null ? 1 : 2;
             } else if (nameMethod.equals("positive")) {
