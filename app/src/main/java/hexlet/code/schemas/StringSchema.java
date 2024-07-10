@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 public class StringSchema extends BaseSchema<String> {
 
     public StringSchema required() {
-        Predicate<String> requiredPredicate = s -> s != null && s != "";
+        Predicate<String> requiredPredicate = s -> s != null && !s.equals("");
         predicateList.add(requiredPredicate);
         return this;
     }
