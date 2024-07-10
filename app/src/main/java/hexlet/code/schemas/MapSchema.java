@@ -1,36 +1,35 @@
 package hexlet.code.schemas;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class MapSchema extends BaseSchema<Map> {
-    private List<String> listMethods = new LinkedList<>();
-    private int sizeMap;
+    protected Map<String, BaseSchema<String>> shapeSchema = new LinkedHashMap<>();
 
-    public MapSchema required() {
-        listMethods.remove("required");
-        listMethods.add("required");
+    public MapSchema sizeof(int size) {
+        Predicate<Map> sizeofPredicate = map -> map.size() == size;
+        predicateList.remove(sizeofPredicate);
+        predicateList.add(sizeofPredicate);
         return this;
     }
 
-    public MapSchema sizeof(int size) {
-        this.sizeMap = size;
-        listMethods.remove("sizeof");
-        listMethods.add("sizeof");
+    public MapSchema shape(Map<String, BaseSchema<String>> schemas) {
+        shapeSchema = schemas;
         return this;
     }
 
     @Override
     public boolean isValid(Map value) {
         int res = 0;
-        for (String nameMethod : listMethods) {
-            if (nameMethod.equals("required")) {
-                res += value == null ? 1 : 2;
-            } else if (nameMethod.equals("sizeof")) {
-                res += value.size() == sizeMap ? 2 : 1;
+        if (shapeSchema.size() > 0) {
+            var keys = value.keySet();
+            for (var key : keys) {
+                res += shapeSchema.get(key).isValid((String) (value.get(key))) ? 2 : 1;
             }
+            return res % 2 == 0;
+        } else {
+            return super.isValid(value);
         }
-        return res % 2 == 0;
     }
 }
