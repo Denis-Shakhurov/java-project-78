@@ -1,44 +1,26 @@
 package hexlet.code.schemas;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.function.Predicate;
 
 public class StringSchema extends BaseSchema<String> {
-    private Map<String, String> methods = new LinkedHashMap<>();
 
     public StringSchema required() {
-        methods.remove("required");
-        methods.put("required", null);
+        Predicate<String> requiredPredicate = s -> s != null && s != "";
+        predicateList.add(requiredPredicate);
         return this;
     }
 
     public StringSchema minLength(int min) {
-        methods.remove("minLength");
-        methods.put("minLength", String.valueOf(min));
+        Predicate<String> minLengthPredicate = s -> s.length() >= min;
+        predicateList.remove(minLengthPredicate);
+        predicateList.add(minLengthPredicate);
         return this;
     }
 
     public StringSchema contains(String str) {
-        methods.remove("contains");
-        methods.put("contains", str);
+        Predicate<String> containsPredicate = s -> s.contains(str);
+        predicateList.remove(containsPredicate);
+        predicateList.add(containsPredicate);
         return this;
-    }
-
-    public boolean isValid(String text) {
-        int res = 0;
-        var keys = methods.keySet();
-        for (var key : keys) {
-            String nameMethod = key;
-            String value = methods.get(key);
-            if (nameMethod.equals("required")) {
-                res += text == null || text == "" ? 1 : 2;
-            } else if (nameMethod.equals("minLength")) {
-                res += text.length() >= Integer.valueOf(value) ? 2 : 1;
-            } else if (nameMethod.equals("contains")) {
-                res += text.contains(value) ? 2 : 1;
-            }
-        }
-        methods.remove("contains");
-        return res % 2 == 0;
     }
 }
