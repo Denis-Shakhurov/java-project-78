@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public class MapSchema extends BaseSchema<Map> {
-    protected Map<String, BaseSchema<String>> shapeSchema = new LinkedHashMap<>();
+    protected Map<?, ?> shapeSchema = new LinkedHashMap<>();
 
     public MapSchema sizeof(int size) {
         Predicate<Map> sizeofPredicate = map -> map.size() == size;
@@ -14,8 +14,8 @@ public class MapSchema extends BaseSchema<Map> {
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema<String>> schemas) {
-        shapeSchema = schemas;
+    public MapSchema shape(Map<?, ?> schemas) {
+        this.shapeSchema = schemas;
         return this;
     }
 
@@ -25,7 +25,7 @@ public class MapSchema extends BaseSchema<Map> {
         if (shapeSchema.size() > 0) {
             var keys = value.keySet();
             for (var key : keys) {
-                res += shapeSchema.get(key).isValid((String) (value.get(key))) ? 2 : 1;
+                res += ((BaseSchema) shapeSchema.get(key)).isValid(value.get(key)) ? 2 : 1;
             }
             return res % 2 == 0;
         } else {
