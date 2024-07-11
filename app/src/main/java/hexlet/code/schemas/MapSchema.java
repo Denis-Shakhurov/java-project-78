@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class MapSchema extends BaseSchema<Map> {
-    protected Map<?, ?> shapeSchema = new LinkedHashMap<>();
+public final class MapSchema extends BaseSchema<Map> {
+    private Map<?, ?> shapeSchema = new LinkedHashMap<>();
 
     public MapSchema() {
         predicates.clear();
