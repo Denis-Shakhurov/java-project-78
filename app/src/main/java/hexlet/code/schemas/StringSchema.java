@@ -28,7 +28,8 @@ public class StringSchema extends BaseSchema<String> {
 
     @Override
     public boolean isValid(String value) {
+        boolean result = super.isValid(value);
         predicates.remove("contains");
-        return super.isValid(value);
+        return result;
     }
 }
