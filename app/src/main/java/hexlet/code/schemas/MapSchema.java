@@ -11,6 +11,12 @@ public class MapSchema extends BaseSchema<Map> {
         predicates.clear();
     }
 
+    public MapSchema required() {
+        requiredStatus = true;
+        Predicate<Map> requiredPredicate = map -> map != null;
+        return this;
+    }
+
     public MapSchema sizeof(int size) {
         Predicate<Map> sizeofPredicate = map -> map.size() == size;
         predicates.put("sizeof", sizeofPredicate);
