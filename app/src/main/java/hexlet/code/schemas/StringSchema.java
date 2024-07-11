@@ -26,11 +26,4 @@ public class StringSchema extends BaseSchema<String> {
         predicates.put("contains", containsPredicate);
         return this;
     }
-
-    @Override
-    public boolean isValid(String value) {
-        boolean result = super.isValid(value);
-        predicates.remove("contains");
-        return result;
-    }
 }
