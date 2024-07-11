@@ -9,6 +9,7 @@ public class StringSchema extends BaseSchema<String> {
     }
 
     public StringSchema required() {
+        requiredStatus = true;
         Predicate<String> requiredPredicate = s -> s != null && !s.equals("");
         predicates.put("required", requiredPredicate);
         return this;
