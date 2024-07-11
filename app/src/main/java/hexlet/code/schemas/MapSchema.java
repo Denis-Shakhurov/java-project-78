@@ -7,10 +7,13 @@ import java.util.function.Predicate;
 public class MapSchema extends BaseSchema<Map> {
     protected Map<?, ?> shapeSchema = new LinkedHashMap<>();
 
+    public MapSchema() {
+        predicates.clear();
+    }
+
     public MapSchema sizeof(int size) {
         Predicate<Map> sizeofPredicate = map -> map.size() == size;
-        predicateList.remove(sizeofPredicate);
-        predicateList.add(sizeofPredicate);
+        predicates.put("sizeof", sizeofPredicate);
         return this;
     }
 
@@ -25,7 +28,12 @@ public class MapSchema extends BaseSchema<Map> {
         if (shapeSchema.size() > 0) {
             var keys = value.keySet();
             for (var key : keys) {
-                res += ((BaseSchema) shapeSchema.get(key)).isValid(value.get(key)) ? 2 : 1;
+                if (!((BaseSchema) shapeSchema.get(key)).isValid(value.get(key))) {
+                    res += 1;
+                    break;
+                } else {
+                    res += 2;
+                }
             }
             return res % 2 == 0;
         } else {
