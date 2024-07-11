@@ -1,23 +1,23 @@
 package hexlet.code.schemas;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class BaseSchema<T> {
-    protected List<Predicate<T>> predicateList = new LinkedList<>();
+    protected Map<String, Predicate<T>> predicates = new LinkedHashMap<>();
 
     public BaseSchema<T> required() {
         Predicate<T> predicateRequired = val -> val != null;
-        predicateList.remove(predicateRequired);
-        predicateList.add(predicateRequired);
+        predicates.put("required", predicateRequired);
         return this;
     }
 
     public boolean isValid(T value) {
         int res = 0;
-        for (Predicate<T> predicate : predicateList) {
-            if (!predicate.test(value)) {
+        var keys = predicates.keySet();
+        for (var key : keys) {
+            if (!predicates.get(key).test(value)) {
                 res += 1;
                 break;
             } else {
