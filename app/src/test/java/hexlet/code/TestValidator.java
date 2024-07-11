@@ -20,6 +20,7 @@ public class TestValidator {
 
         assertFalse(schema.required().isValid(""));
         assertTrue(schema.minLength(3).contains("ol").isValid("cool"));
+        assertTrue(schema.minLength(13).minLength(10).minLength(1).isValid("Hexlet"));
         assertFalse(schema.minLength(3).minLength(10).minLength(12).isValid("Hexlet"));
         assertFalse(schema.minLength(2).isValid(null));
     }
