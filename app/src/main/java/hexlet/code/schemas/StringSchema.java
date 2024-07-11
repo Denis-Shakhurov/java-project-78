@@ -4,23 +4,31 @@ import java.util.function.Predicate;
 
 public class StringSchema extends BaseSchema<String> {
 
+    public StringSchema() {
+        predicates.clear();
+    }
+
     public StringSchema required() {
         Predicate<String> requiredPredicate = s -> s != null && !s.equals("");
-        predicateList.add(requiredPredicate);
+        predicates.put("required", requiredPredicate);
         return this;
     }
 
     public StringSchema minLength(int min) {
         Predicate<String> minLengthPredicate = s -> s.length() >= min;
-        predicateList.remove(minLengthPredicate);
-        predicateList.add(minLengthPredicate);
+        predicates.put("minLength", minLengthPredicate);
         return this;
     }
 
     public StringSchema contains(String str) {
         Predicate<String> containsPredicate = s -> s.contains(str);
-        predicateList.remove(containsPredicate);
-        predicateList.add(containsPredicate);
+        predicates.put("contains", containsPredicate);
         return this;
+    }
+
+    @Override
+    public boolean isValid(String value) {
+        predicates.remove("contains");
+        return super.isValid(value);
     }
 }
