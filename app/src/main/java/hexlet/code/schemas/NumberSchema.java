@@ -3,6 +3,7 @@ package hexlet.code.schemas;
 import java.util.function.Predicate;
 
 public final class NumberSchema extends BaseSchema<Integer> {
+
     public NumberSchema() {
         predicates.clear();
     }
