@@ -4,13 +4,9 @@ import java.util.function.Predicate;
 
 public final class StringSchema extends BaseSchema<String> {
 
-    public StringSchema() {
-        predicates.clear();
-    }
-
     public StringSchema required() {
         requiredStatus = true;
-        Predicate<String> requiredPredicate = s -> s != null && !s.equals("");
+        Predicate<String> requiredPredicate = s -> s != null && !s.isEmpty();
         predicates.put("required", requiredPredicate);
         return this;
     }
