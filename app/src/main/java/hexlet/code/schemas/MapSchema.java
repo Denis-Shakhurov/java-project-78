@@ -5,10 +5,6 @@ import java.util.function.Predicate;
 
 public final class MapSchema extends BaseSchema<Map> {
 
-    public MapSchema() {
-        predicates.clear();
-    }
-
     public MapSchema required() {
         requiredStatus = true;
         Predicate<Map> requiredPredicate = map -> map != null;
