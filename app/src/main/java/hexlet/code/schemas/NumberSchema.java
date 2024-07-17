@@ -4,10 +4,6 @@ import java.util.function.Predicate;
 
 public final class NumberSchema extends BaseSchema<Integer> {
 
-    public NumberSchema() {
-        predicates.clear();
-    }
-
     public NumberSchema required() {
         requiredStatus = true;
         Predicate<Integer> predicateRequired = val -> val != null;
